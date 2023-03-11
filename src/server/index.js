@@ -1,5 +1,7 @@
 const express = require('express');
-import Counter from '@/router/counter.js';
+import App from '../App.js';
+import Counter from '../router/counter'
+import {StaticRouter} from 'react-router-dom/server'
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 const app = express();
@@ -7,7 +9,11 @@ const app = express();
 app.use(express.static('public'));
 
 app.get('*', (res, req) => {
-  const html = renderToString(<Counter />)
+  const html = renderToString(
+    <StaticRouter>
+      <App />
+    </StaticRouter>
+  )
   console.log('html: ', html);
   req.send(`
   <!DOCTYPE html>
